@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: providerservice
+  cloud:
+    vault:
+      token: d41c902c-421e-d708-1f48-267087b8dcae
+      scheme: http
