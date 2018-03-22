@@ -5,7 +5,8 @@
       "name": "my-consumer-service",
       "labels": {
         "service": "my-consumer-service",
-        "hystrix.enabled": "true"
+        "hystrix.enabled": "true",
+        "hystrix.cluster": "retail"
       }
     },
     "spec": {

@@ -17,8 +17,7 @@
           "labels" : {
             "name" : "my-consumer-app",
             "service" : "my-consumer-service",
-            "biz-app-id" : "retail",
-            "hystrix.enabled": "true"
+            "biz-app-id" : "retail"
           }
         },
         "spec" : {
