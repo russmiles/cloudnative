@@ -1,0 +1,29 @@
+info:
+  component: Configuration Server
+
+spring:
+  jmx:
+    default_domain: cloud.config.server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/antifragilesoftware/configrepo
+      health:
+        repositories:
+          configuredmicroservice1-dev:
+            name: configuredmicroservice1
+            profiles: dev
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+
+server:
+  port: 8888
+
+
+
+ 

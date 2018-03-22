@@ -1,0 +1,3785 @@
+{
+  "activities": [
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Kill a microservice by `name` in the namespace `ns`.\n\nThe microservice is killed by deleting the deployment for it without\na graceful period to trigger an abrupt termination.\n\nThe selected resources are matched by the given `label_selector`.",
+      "mod": "chaosk8s.actions",
+      "name": "kill_microservice",
+      "type": "action"
+    },
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Remove the service endpoint that sits in front of microservices (pods).",
+      "mod": "chaosk8s.actions",
+      "name": "remove_service_endpoint",
+      "type": "action"
+    },
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "replicas",
+          "type": "integer"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Scale a deployment up or down. The `name` is the name of the deployment.",
+      "mod": "chaosk8s.actions",
+      "name": "scale_microservice",
+      "type": "action"
+    },
+    {
+      "arguments": [
+        {
+          "name": "spec_path",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Start a microservice described by the deployment config, which must be the\npath to the JSON or YAML representation of the deployment.",
+      "mod": "chaosk8s.actions",
+      "name": "start_microservice",
+      "type": "action"
+    },
+    {
+      "arguments": [
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Check all microservices in the system are running and available.\n\nRaises :exc:`chaoslib.exceptions.FailedActivity` when the state is not\nas expected.",
+      "mod": "chaosk8s.probes",
+      "name": "all_microservices_healthy",
+      "return_type": "object",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": 30,
+          "name": "timeout",
+          "type": "integer"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Wait until the deployment gets into an intermediate state where not all\nexpected replicas are available. Once this state is reached, return `True`.\nIf the state is not reached after `timeout` seconds, a\n:exc:`chaoslib.exceptions.FailedActivity` exception is raised.",
+      "mod": "chaosk8s.probes",
+      "name": "deployment_is_not_fully_available",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Lookup a deployment by `name` in the namespace `ns`.\n\nThe selected resources are matched by the given `label_selector`.\n\nRaises :exc:`chaoslib.exceptions.FailedActivity` when the state is not\nas expected.",
+      "mod": "chaosk8s.probes",
+      "name": "microservice_available_and_healthy",
+      "return_type": "object",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Lookup pods with a `name` label set to the given `name` in the specified\n`ns`.\n\nRaises :exc:`chaoslib.exceptions.FailedActivity` when one of the pods\nwith the specified `name` is in the `\"Running\"` phase.",
+      "mod": "chaosk8s.probes",
+      "name": "microservice_is_not_available",
+      "return_type": "boolean",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "default": null,
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "last",
+          "type": "object"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": false,
+          "name": "from_previous",
+          "type": "boolean"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "container_name",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Fetch logs for all the pods with the label `\"name\"` set to `name` and\nreturn a dictionary with the keys being the pod's name and the values\nthe logs of said pod. If `name` is not provided, use only the\n`label_selector` instead.\n\nWhen your pod has several containers, you should also set `container_name`\nto clarify which container you want to read logs from.\n\nIf you provide `last`, this returns the logs of the last N seconds\nuntil now. This can set to a fluent delta such as `10 minutes`.\n\nYou may also set `from_previous` to `True` to capture the logs of a\nprevious pod's incarnation, if any.",
+      "mod": "chaosk8s.probes",
+      "name": "read_microservices_logs",
+      "return_type": "mapping",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Lookup a service endpoint by its name and raises :exc:`FailedProbe` when\nthe service was not found or not initialized.",
+      "mod": "chaosk8s.probes",
+      "name": "service_endpoint_is_initialized",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "default": null,
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "name_pattern",
+          "type": "string"
+        },
+        {
+          "default": false,
+          "name": "all",
+          "type": "boolean"
+        },
+        {
+          "default": false,
+          "name": "rand",
+          "type": "boolean"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Terminate a pod gracefully. Select the appropriate pods by label and/or\nname patterns. Whenever a pattern is provided for the name, all pods\nretrieved will be filtered out if their name do not match the given\npattern.\n\nIf neither `label_selector` nor `name_pattern` are provided, all pods\nin the namespace will be terminated.\n\nIf `all` is set to `True`, all matching pods will be terminated.\nIf `rand` is set to `True`, one random pod will be terminated.\nOtherwise, the first retrieved pod will be terminated.",
+      "mod": "chaosk8s.pod.actions",
+      "name": "terminate_pods",
+      "type": "action"
+    },
+    {
+      "arguments": [
+        {
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": "Running",
+          "name": "phase",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Lookup a pod by `label_selector` in the namespace `ns`.\n\nRaises :exc:`chaoslib.exceptions.FailedActivity` when the state is not\nas expected.",
+      "mod": "chaosk8s.pod.probes",
+      "name": "pods_in_phase",
+      "return_type": "boolean",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": "Running",
+          "name": "phase",
+          "type": "string"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Lookup a pod by `label_selector` in the namespace `ns`.\n\nRaises :exc:`chaoslib.exceptions.FailedActivity` when the pod is in the\ngiven phase and should not have.",
+      "mod": "chaosk8s.pod.probes",
+      "name": "pods_not_in_phase",
+      "return_type": "boolean",
+      "type": "probe"
+    },
+    {
+      "arguments": [
+        {
+          "default": null,
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "last",
+          "type": "object"
+        },
+        {
+          "default": "default",
+          "name": "ns",
+          "type": "string"
+        },
+        {
+          "default": false,
+          "name": "from_previous",
+          "type": "boolean"
+        },
+        {
+          "default": "name in ({name})",
+          "name": "label_selector",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "container_name",
+          "type": "string"
+        },
+        {
+          "default": null,
+          "name": "secrets",
+          "type": "mapping"
+        }
+      ],
+      "doc": "Fetch logs for all the pods with the label `\"name\"` set to `name` and\nreturn a dictionary with the keys being the pod's name and the values\nthe logs of said pod. If `name` is not provided, use only the\n`label_selector` instead.\n\nWhen your pod has several containers, you should also set `container_name`\nto clarify which container you want to read logs from.\n\nIf you provide `last`, this returns the logs of the last N seconds\nuntil now. This can set to a fluent delta such as `10 minutes`.\n\nYou may also set `from_previous` to `True` to capture the logs of a\nprevious pod's incarnation, if any.",
+      "mod": "chaosk8s.pod.probes",
+      "name": "read_pod_logs",
+      "return_type": "mapping",
+      "type": "probe"
+    }
+  ],
+  "candidates": {
+    "4d992d76-f0ac-4e7d-a066-bebd6c4d19db": {}
+  },
+  "chaosiq": {
+    "discovery_ref": "c86a6f60-5c3d-4047-a312-648ddd1c90d0",
+    "workspace": "personal"
+  },
+  "chaoslib_version": "0.15.1",
+  "date": "2018-03-21T18:20:42.334513Z",
+  "experiments": [
+    {
+      "chaosiq": {
+        "suggested_experiment_ref": "4d992d76-f0ac-4e7d-a066-bebd6c4d19db",
+        "target": "kubernetes"
+      },
+      "configuration": {
+        "service_url": {
+          "key": "SERVICE_URL",
+          "type": "env"
+        }
+      },
+      "description": "Can our consumer survive gracefully a provider's failure?",
+      "method": [
+        {
+          "name": "terminate_pods",
+          "provider": {
+            "arguments": {
+              "label_selector": "",
+              "ns": "default"
+            },
+            "func": "terminate_pods",
+            "module": "chaosk8s.pod.actions",
+            "type": "python"
+          },
+          "type": "action"
+        }
+      ],
+      "steady-state-hypothesis": {
+        "probes": [
+          {
+            "name": "application-must-respond-normally",
+            "provider": {
+              "timeout": 3,
+              "type": "http",
+              "url": "${service_url}"
+            },
+            "tolerance": 200,
+            "type": "probe"
+          },
+          {
+            "name": "pods_in_phase",
+            "pauses": {
+              "before": 20
+            },
+            "provider": {
+              "arguments": {
+                "label_selector": "",
+                "ns": "default",
+                "phase": "Running"
+              },
+              "func": "pods_in_phase",
+              "module": "chaosk8s.pod.probes",
+              "type": "python"
+            },
+            "tolerance": true,
+            "type": "probe"
+          }
+        ],
+        "title": "Services are all available and healthy"
+      },
+      "tags": [
+        "service",
+        "kubernetes"
+      ],
+      "title": "System is resilient to provider's failures",
+      "version": "1.0.0"
+    }
+  ],
+  "extension": {
+    "name": "chaostoolkit-kubernetes",
+    "version": "0.13.0"
+  },
+  "id": "83867b91-cf42-4b30-9758-1f16b0c15a7e",
+  "platform": {
+    "machine": "x86_64",
+    "node": "Case.local",
+    "proc": "i386",
+    "python": "3.6.0",
+    "release": "17.4.0",
+    "system": "Darwin",
+    "version": "Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64"
+  },
+  "system": {
+    "deployments": [
+      {
+        "apiVersion": "extensions/v1beta1",
+        "items": [
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "3",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"my-consumer-app\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"service\":\"my-consumer-service\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":1},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"labels\":{\"biz-app-id\":\"retail\",\"name\":\"my-consumer-app\",\"service\":\"my-consumer-service\"},\"name\":\"my-consumer-app\"},\"spec\":{\"containers\":[{\"image\":\"chaostoolkit/simple-boot-feign-direct-microservice-consumer:before\",\"imagePullPolicy\":\"Always\",\"name\":\"my-consumer-app\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\",\"protocol\":\"TCP\"}],\"resources\":{\"limits\":{\"cpu\":0.4,\"memory\":\"512Mi\"},\"requests\":{\"cpu\":0.2,\"memory\":\"256Mi\"}}}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-14T18:16:28Z",
+              "generation": 3,
+              "labels": {
+                "biz-app-id": "retail",
+                "name": "my-consumer-app",
+                "service": "my-consumer-service"
+              },
+              "name": "my-consumer-app",
+              "namespace": "default",
+              "resourceVersion": "81520",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/my-consumer-app",
+              "uid": "d0c2612f-27b3-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "progressDeadlineSeconds": 600,
+              "replicas": 1,
+              "revisionHistoryLimit": 2,
+              "selector": {
+                "matchLabels": {
+                  "service": "my-consumer-service"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "creationTimestamp": null,
+                  "labels": {
+                    "biz-app-id": "retail",
+                    "name": "my-consumer-app",
+                    "service": "my-consumer-service"
+                  },
+                  "name": "my-consumer-app"
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "image": "chaostoolkit/simple-boot-feign-direct-microservice-consumer:before",
+                      "imagePullPolicy": "Always",
+                      "name": "my-consumer-app",
+                      "ports": [
+                        {
+                          "containerPort": 8080,
+                          "name": "http",
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {
+                        "limits": {
+                          "cpu": "400m",
+                          "memory": "512Mi"
+                        },
+                        "requests": {
+                          "cpu": "200m",
+                          "memory": "256Mi"
+                        }
+                      },
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File"
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "terminationGracePeriodSeconds": 30
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-14T18:16:29Z",
+                  "lastUpdateTime": "2018-03-14T18:16:29Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                },
+                {
+                  "lastTransitionTime": "2018-03-14T18:16:28Z",
+                  "lastUpdateTime": "2018-03-14T18:20:52Z",
+                  "message": "ReplicaSet \"my-consumer-app-855bd57db4\" has successfully progressed.",
+                  "reason": "NewReplicaSetAvailable",
+                  "status": "True",
+                  "type": "Progressing"
+                }
+              ],
+              "observedGeneration": 3,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"my-provider-app\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"service\":\"my-provider-service\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":1},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"labels\":{\"biz-app-id\":\"retail\",\"name\":\"my-provider-app\",\"service\":\"my-provider-service\"},\"name\":\"my-provider-app\"},\"spec\":{\"containers\":[{\"image\":\"chaostoolkit/simple-microservice-provider:before\",\"imagePullPolicy\":\"Always\",\"name\":\"my-provider-app\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\",\"protocol\":\"TCP\"}],\"resources\":{\"limits\":{\"cpu\":0.4,\"memory\":\"256Mi\"},\"requests\":{\"cpu\":0.2,\"memory\":\"256Mi\"}}}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-21T12:58:52Z",
+              "generation": 1,
+              "labels": {
+                "biz-app-id": "retail",
+                "name": "my-provider-app",
+                "service": "my-provider-service"
+              },
+              "name": "my-provider-app",
+              "namespace": "default",
+              "resourceVersion": "81534",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/my-provider-app",
+              "uid": "9afc7294-2d07-11e8-8e81-0800274b92f0"
+            },
+            "spec": {
+              "progressDeadlineSeconds": 600,
+              "replicas": 1,
+              "revisionHistoryLimit": 2,
+              "selector": {
+                "matchLabels": {
+                  "service": "my-provider-service"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "creationTimestamp": null,
+                  "labels": {
+                    "biz-app-id": "retail",
+                    "name": "my-provider-app",
+                    "service": "my-provider-service"
+                  },
+                  "name": "my-provider-app"
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "image": "chaostoolkit/simple-microservice-provider:before",
+                      "imagePullPolicy": "Always",
+                      "name": "my-provider-app",
+                      "ports": [
+                        {
+                          "containerPort": 8080,
+                          "name": "http",
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {
+                        "limits": {
+                          "cpu": "400m",
+                          "memory": "256Mi"
+                        },
+                        "requests": {
+                          "cpu": "200m",
+                          "memory": "256Mi"
+                        }
+                      },
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File"
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "terminationGracePeriodSeconds": 30
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-21T12:58:52Z",
+                  "lastUpdateTime": "2018-03-21T12:58:52Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                },
+                {
+                  "lastTransitionTime": "2018-03-21T12:58:52Z",
+                  "lastUpdateTime": "2018-03-21T12:58:56Z",
+                  "message": "ReplicaSet \"my-provider-app-775f76fb97\" has successfully progressed.",
+                  "reason": "NewReplicaSetAvailable",
+                  "status": "True",
+                  "type": "Progressing"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          }
+        ],
+        "kind": "DeploymentList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments"
+        }
+      },
+      {
+        "apiVersion": "extensions/v1beta1",
+        "items": [
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"istio-ca\",\"namespace\":\"istio-system\"},\"spec\":{\"replicas\":1,\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"istio\":\"istio-ca\"}},\"spec\":{\"containers\":[{\"args\":[\"--istio-ca-storage-namespace=istio-system\",\"--grpc-port=8060\",\"--grpc-hostname=istio-ca\",\"--self-signed-ca=true\",\"--logtostderr\",\"--stderrthreshold\",\"INFO\"],\"command\":[\"/usr/local/bin/istio_ca\"],\"image\":\"docker.io/istio/istio-ca:0.6.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"istio-ca\"}],\"serviceAccountName\":\"istio-ca-service-account\"}}}}\n"
+              },
+              "creationTimestamp": "2018-03-21T13:05:25Z",
+              "generation": 1,
+              "labels": {
+                "istio": "istio-ca"
+              },
+              "name": "istio-ca",
+              "namespace": "istio-system",
+              "resourceVersion": "81821",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/istio-system/deployments/istio-ca",
+              "uid": "855b10f6-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "istio": "istio-ca"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "annotations": {
+                    "sidecar.istio.io/inject": "false"
+                  },
+                  "creationTimestamp": null,
+                  "labels": {
+                    "istio": "istio-ca"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "args": [
+                        "--istio-ca-storage-namespace=istio-system",
+                        "--grpc-port=8060",
+                        "--grpc-hostname=istio-ca",
+                        "--self-signed-ca=true",
+                        "--logtostderr",
+                        "--stderrthreshold",
+                        "INFO"
+                      ],
+                      "command": [
+                        "/usr/local/bin/istio_ca"
+                      ],
+                      "image": "docker.io/istio/istio-ca:0.6.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "istio-ca",
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File"
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "serviceAccount": "istio-ca-service-account",
+                  "serviceAccountName": "istio-ca-service-account",
+                  "terminationGracePeriodSeconds": 30
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "lastUpdateTime": "2018-03-21T13:05:25Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"istio-ingress\",\"namespace\":\"istio-system\"},\"spec\":{\"replicas\":1,\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"istio\":\"ingress\"}},\"spec\":{\"containers\":[{\"args\":[\"proxy\",\"ingress\",\"-v\",\"2\",\"--discoveryAddress\",\"istio-pilot:15003\",\"--discoveryRefreshDelay\",\"1s\",\"--drainDuration\",\"45s\",\"--parentShutdownDuration\",\"1m0s\",\"--connectTimeout\",\"10s\",\"--serviceCluster\",\"istio-ingress\",\"--zipkinAddress\",\"zipkin:9411\",\"--statsdUdpAddress\",\"istio-mixer:9125\",\"--proxyAdminPort\",\"15000\",\"--controlPlaneAuthPolicy\",\"NONE\"],\"env\":[{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"}}}],\"image\":\"docker.io/istio/proxy:0.6.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"istio-ingress\",\"ports\":[{\"containerPort\":80},{\"containerPort\":443}],\"volumeMounts\":[{\"mountPath\":\"/etc/certs\",\"name\":\"istio-certs\",\"readOnly\":true},{\"mountPath\":\"/etc/istio/ingress-certs\",\"name\":\"ingress-certs\",\"readOnly\":true}]}],\"serviceAccountName\":\"istio-ingress-service-account\",\"volumes\":[{\"name\":\"istio-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio.default\"}},{\"name\":\"ingress-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio-ingress-certs\"}}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-21T13:05:25Z",
+              "generation": 1,
+              "labels": {
+                "istio": "ingress"
+              },
+              "name": "istio-ingress",
+              "namespace": "istio-system",
+              "resourceVersion": "81811",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/istio-system/deployments/istio-ingress",
+              "uid": "855348f5-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "istio": "ingress"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "annotations": {
+                    "sidecar.istio.io/inject": "false"
+                  },
+                  "creationTimestamp": null,
+                  "labels": {
+                    "istio": "ingress"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "args": [
+                        "proxy",
+                        "ingress",
+                        "-v",
+                        "2",
+                        "--discoveryAddress",
+                        "istio-pilot:15003",
+                        "--discoveryRefreshDelay",
+                        "1s",
+                        "--drainDuration",
+                        "45s",
+                        "--parentShutdownDuration",
+                        "1m0s",
+                        "--connectTimeout",
+                        "10s",
+                        "--serviceCluster",
+                        "istio-ingress",
+                        "--zipkinAddress",
+                        "zipkin:9411",
+                        "--statsdUdpAddress",
+                        "istio-mixer:9125",
+                        "--proxyAdminPort",
+                        "15000",
+                        "--controlPlaneAuthPolicy",
+                        "NONE"
+                      ],
+                      "env": [
+                        {
+                          "name": "POD_NAME",
+                          "valueFrom": {
+                            "fieldRef": {
+                              "apiVersion": "v1",
+                              "fieldPath": "metadata.name"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POD_NAMESPACE",
+                          "valueFrom": {
+                            "fieldRef": {
+                              "apiVersion": "v1",
+                              "fieldPath": "metadata.namespace"
+                            }
+                          }
+                        }
+                      ],
+                      "image": "docker.io/istio/proxy:0.6.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "istio-ingress",
+                      "ports": [
+                        {
+                          "containerPort": 80,
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 443,
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/etc/certs",
+                          "name": "istio-certs",
+                          "readOnly": true
+                        },
+                        {
+                          "mountPath": "/etc/istio/ingress-certs",
+                          "name": "ingress-certs",
+                          "readOnly": true
+                        }
+                      ]
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "serviceAccount": "istio-ingress-service-account",
+                  "serviceAccountName": "istio-ingress-service-account",
+                  "terminationGracePeriodSeconds": 30,
+                  "volumes": [
+                    {
+                      "name": "istio-certs",
+                      "secret": {
+                        "defaultMode": 420,
+                        "optional": true,
+                        "secretName": "istio.default"
+                      }
+                    },
+                    {
+                      "name": "ingress-certs",
+                      "secret": {
+                        "defaultMode": 420,
+                        "optional": true,
+                        "secretName": "istio-ingress-certs"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "lastUpdateTime": "2018-03-21T13:05:25Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"istio-mixer\",\"namespace\":\"istio-system\"},\"spec\":{\"replicas\":1,\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"istio\":\"mixer\"}},\"spec\":{\"containers\":[{\"args\":[\"-statsd.mapping-config=/etc/statsd/mapping.conf\"],\"image\":\"prom/statsd-exporter:v0.5.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"statsd-to-prometheus\",\"ports\":[{\"containerPort\":9102},{\"containerPort\":9125,\"protocol\":\"UDP\"}],\"volumeMounts\":[{\"mountPath\":\"/etc/statsd\",\"name\":\"config-volume\"}]},{\"args\":[\"--configStoreURL=k8s://\",\"--configDefaultNamespace=istio-system\",\"--zipkinURL=http://zipkin:9411/api/v1/spans\",\"--logtostderr\",\"-v\",\"2\"],\"image\":\"docker.io/istio/mixer:0.6.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"mixer\",\"ports\":[{\"containerPort\":9091},{\"containerPort\":9093},{\"containerPort\":9094},{\"containerPort\":42422}]},{\"args\":[\"proxy\",\"mixer\",\"-v\",\"2\",\"--controlPlaneAuthPolicy\",\"NONE\",\"--customConfigFile\",\"/etc/istio/proxy/envoy_mixer.json\"],\"image\":\"docker.io/istio/proxy:0.6.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"istio-proxy\",\"ports\":[{\"containerPort\":15004}],\"volumeMounts\":[{\"mountPath\":\"/etc/certs\",\"name\":\"istio-certs\",\"readOnly\":true}]}],\"serviceAccountName\":\"istio-mixer-service-account\",\"volumes\":[{\"name\":\"istio-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio.istio-mixer-service-account\"}},{\"configMap\":{\"name\":\"istio-mixer\"},\"name\":\"config-volume\"}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-21T13:05:24Z",
+              "generation": 1,
+              "labels": {
+                "istio": "mixer"
+              },
+              "name": "istio-mixer",
+              "namespace": "istio-system",
+              "resourceVersion": "81844",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/istio-system/deployments/istio-mixer",
+              "uid": "84c2ae66-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "istio": "mixer"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "annotations": {
+                    "sidecar.istio.io/inject": "false"
+                  },
+                  "creationTimestamp": null,
+                  "labels": {
+                    "istio": "mixer"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "args": [
+                        "-statsd.mapping-config=/etc/statsd/mapping.conf"
+                      ],
+                      "image": "prom/statsd-exporter:v0.5.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "statsd-to-prometheus",
+                      "ports": [
+                        {
+                          "containerPort": 9102,
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 9125,
+                          "protocol": "UDP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/etc/statsd",
+                          "name": "config-volume"
+                        }
+                      ]
+                    },
+                    {
+                      "args": [
+                        "--configStoreURL=k8s://",
+                        "--configDefaultNamespace=istio-system",
+                        "--zipkinURL=http://zipkin:9411/api/v1/spans",
+                        "--logtostderr",
+                        "-v",
+                        "2"
+                      ],
+                      "image": "docker.io/istio/mixer:0.6.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "mixer",
+                      "ports": [
+                        {
+                          "containerPort": 9091,
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 9093,
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 9094,
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 42422,
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File"
+                    },
+                    {
+                      "args": [
+                        "proxy",
+                        "mixer",
+                        "-v",
+                        "2",
+                        "--controlPlaneAuthPolicy",
+                        "NONE",
+                        "--customConfigFile",
+                        "/etc/istio/proxy/envoy_mixer.json"
+                      ],
+                      "image": "docker.io/istio/proxy:0.6.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "istio-proxy",
+                      "ports": [
+                        {
+                          "containerPort": 15004,
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/etc/certs",
+                          "name": "istio-certs",
+                          "readOnly": true
+                        }
+                      ]
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "serviceAccount": "istio-mixer-service-account",
+                  "serviceAccountName": "istio-mixer-service-account",
+                  "terminationGracePeriodSeconds": 30,
+                  "volumes": [
+                    {
+                      "name": "istio-certs",
+                      "secret": {
+                        "defaultMode": 420,
+                        "optional": true,
+                        "secretName": "istio.istio-mixer-service-account"
+                      }
+                    },
+                    {
+                      "configMap": {
+                        "defaultMode": 420,
+                        "name": "istio-mixer"
+                      },
+                      "name": "config-volume"
+                    }
+                  ]
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-21T13:05:24Z",
+                  "lastUpdateTime": "2018-03-21T13:05:24Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"istio-pilot\",\"namespace\":\"istio-system\"},\"spec\":{\"replicas\":1,\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/inject\":\"false\"},\"labels\":{\"istio\":\"pilot\"}},\"spec\":{\"containers\":[{\"args\":[\"discovery\",\"-v\",\"2\",\"--admission-service\",\"istio-pilot\"],\"env\":[{\"name\":\"POD_NAME\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.name\"}}},{\"name\":\"POD_NAMESPACE\",\"valueFrom\":{\"fieldRef\":{\"apiVersion\":\"v1\",\"fieldPath\":\"metadata.namespace\"}}},{\"name\":\"PILOT_THROTTLE\",\"value\":\"200\"}],\"image\":\"docker.io/istio/pilot:0.6.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"discovery\",\"ports\":[{\"containerPort\":8080},{\"containerPort\":443}],\"volumeMounts\":[{\"mountPath\":\"/etc/istio/config\",\"name\":\"config-volume\"}]},{\"args\":[\"proxy\",\"pilot\",\"-v\",\"2\",\"--discoveryAddress\",\"istio-pilot:15003\",\"--controlPlaneAuthPolicy\",\"NONE\",\"--customConfigFile\",\"/etc/istio/proxy/envoy_pilot.json\"],\"image\":\"docker.io/istio/proxy:0.6.0\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"istio-proxy\",\"ports\":[{\"containerPort\":15003}],\"volumeMounts\":[{\"mountPath\":\"/etc/certs\",\"name\":\"istio-certs\",\"readOnly\":true}]}],\"serviceAccountName\":\"istio-pilot-service-account\",\"volumes\":[{\"configMap\":{\"name\":\"istio\"},\"name\":\"config-volume\"},{\"name\":\"istio-certs\",\"secret\":{\"optional\":true,\"secretName\":\"istio.istio-pilot-service-account\"}}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-21T13:05:25Z",
+              "generation": 1,
+              "labels": {
+                "istio": "pilot"
+              },
+              "name": "istio-pilot",
+              "namespace": "istio-system",
+              "resourceVersion": "81853",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/istio-system/deployments/istio-pilot",
+              "uid": "8546c36d-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "istio": "pilot"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "annotations": {
+                    "sidecar.istio.io/inject": "false"
+                  },
+                  "creationTimestamp": null,
+                  "labels": {
+                    "istio": "pilot"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "args": [
+                        "discovery",
+                        "-v",
+                        "2",
+                        "--admission-service",
+                        "istio-pilot"
+                      ],
+                      "env": [
+                        {
+                          "name": "POD_NAME",
+                          "valueFrom": {
+                            "fieldRef": {
+                              "apiVersion": "v1",
+                              "fieldPath": "metadata.name"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POD_NAMESPACE",
+                          "valueFrom": {
+                            "fieldRef": {
+                              "apiVersion": "v1",
+                              "fieldPath": "metadata.namespace"
+                            }
+                          }
+                        },
+                        {
+                          "name": "PILOT_THROTTLE",
+                          "value": "200"
+                        }
+                      ],
+                      "image": "docker.io/istio/pilot:0.6.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "discovery",
+                      "ports": [
+                        {
+                          "containerPort": 8080,
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 443,
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/etc/istio/config",
+                          "name": "config-volume"
+                        }
+                      ]
+                    },
+                    {
+                      "args": [
+                        "proxy",
+                        "pilot",
+                        "-v",
+                        "2",
+                        "--discoveryAddress",
+                        "istio-pilot:15003",
+                        "--controlPlaneAuthPolicy",
+                        "NONE",
+                        "--customConfigFile",
+                        "/etc/istio/proxy/envoy_pilot.json"
+                      ],
+                      "image": "docker.io/istio/proxy:0.6.0",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "istio-proxy",
+                      "ports": [
+                        {
+                          "containerPort": 15003,
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/etc/certs",
+                          "name": "istio-certs",
+                          "readOnly": true
+                        }
+                      ]
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "serviceAccount": "istio-pilot-service-account",
+                  "serviceAccountName": "istio-pilot-service-account",
+                  "terminationGracePeriodSeconds": 30,
+                  "volumes": [
+                    {
+                      "configMap": {
+                        "defaultMode": 420,
+                        "name": "istio"
+                      },
+                      "name": "config-volume"
+                    },
+                    {
+                      "name": "istio-certs",
+                      "secret": {
+                        "defaultMode": 420,
+                        "optional": true,
+                        "secretName": "istio.istio-pilot-service-account"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "lastUpdateTime": "2018-03-21T13:05:25Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          }
+        ],
+        "kind": "DeploymentList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/apis/extensions/v1beta1/namespaces/istio-system/deployments"
+        }
+      },
+      {
+        "apiVersion": "extensions/v1beta1",
+        "items": [],
+        "kind": "DeploymentList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/apis/extensions/v1beta1/namespaces/kube-public/deployments"
+        }
+      },
+      {
+        "apiVersion": "extensions/v1beta1",
+        "items": [
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"addonmanager.kubernetes.io/mode\":\"Reconcile\",\"k8s-app\":\"kube-dns\",\"version\":\"v20\"},\"name\":\"kube-dns\",\"namespace\":\"kube-system\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"k8s-app\":\"kube-dns\"}},\"template\":{\"metadata\":{\"annotations\":{\"scheduler.alpha.kubernetes.io/critical-pod\":\"\"},\"labels\":{\"k8s-app\":\"kube-dns\"}},\"spec\":{\"containers\":[{\"args\":[\"--domain=cluster.local.\",\"--dns-port=10053\",\"--config-map=kube-dns\",\"--v=2\"],\"env\":[{\"name\":\"PROMETHEUS_PORT\",\"value\":\"10055\"}],\"image\":\"k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.5\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":5,\"httpGet\":{\"path\":\"/healthcheck/kubedns\",\"port\":10054,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":60,\"successThreshold\":1,\"timeoutSeconds\":5},\"name\":\"kubedns\",\"ports\":[{\"containerPort\":10053,\"name\":\"dns-local\",\"protocol\":\"UDP\"},{\"containerPort\":10053,\"name\":\"dns-tcp-local\",\"protocol\":\"TCP\"},{\"containerPort\":10055,\"name\":\"metrics\",\"protocol\":\"TCP\"}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/readiness\",\"port\":8081,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":3,\"timeoutSeconds\":5},\"resources\":{\"limits\":{\"memory\":\"170Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"70Mi\"}},\"volumeMounts\":[{\"mountPath\":\"/kube-dns-config\",\"name\":\"kube-dns-config\"}]},{\"args\":[\"-v=2\",\"-logtostderr\",\"-configDir=/etc/k8s/dns/dnsmasq-nanny\",\"-restartDnsmasq=true\",\"--\",\"-k\",\"--cache-size=1000\",\"--log-facility=-\",\"--server=/cluster.local/127.0.0.1#10053\",\"--server=/in-addr.arpa/127.0.0.1#10053\",\"--server=/ip6.arpa/127.0.0.1#10053\"],\"image\":\"k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.5\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":5,\"httpGet\":{\"path\":\"/healthcheck/dnsmasq\",\"port\":10054,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":60,\"successThreshold\":1,\"timeoutSeconds\":5},\"name\":\"dnsmasq\",\"ports\":[{\"containerPort\":53,\"name\":\"dns\",\"protocol\":\"UDP\"},{\"containerPort\":53,\"name\":\"dns-tcp\",\"protocol\":\"TCP\"}],\"resources\":{\"requests\":{\"cpu\":\"150m\",\"memory\":\"20Mi\"}},\"volumeMounts\":[{\"mountPath\":\"/etc/k8s/dns/dnsmasq-nanny\",\"name\":\"kube-dns-config\"}]},{\"args\":[\"--v=2\",\"--logtostderr\",\"--probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.cluster.local.,5,A\",\"--probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.cluster.local.,5,A\"],\"image\":\"k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.5\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"failureThreshold\":5,\"httpGet\":{\"path\":\"/metrics\",\"port\":10054,\"scheme\":\"HTTP\"},\"initialDelaySeconds\":60,\"successThreshold\":1,\"timeoutSeconds\":5},\"name\":\"sidecar\",\"ports\":[{\"containerPort\":10054,\"name\":\"metrics\",\"protocol\":\"TCP\"}],\"resources\":{\"requests\":{\"cpu\":\"10m\",\"memory\":\"20Mi\"}}}],\"dnsPolicy\":\"Default\",\"tolerations\":[{\"key\":\"CriticalAddonsOnly\",\"operator\":\"Exists\"}],\"volumes\":[{\"configMap\":{\"name\":\"kube-dns\",\"optional\":true},\"name\":\"kube-dns-config\"}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-12T20:56:24Z",
+              "generation": 1,
+              "labels": {
+                "addonmanager.kubernetes.io/mode": "Reconcile",
+                "k8s-app": "kube-dns",
+                "version": "v20"
+              },
+              "name": "kube-dns",
+              "namespace": "kube-system",
+              "resourceVersion": "81544",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/kube-system/deployments/kube-dns",
+              "uid": "d3301e08-2637-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "k8s-app": "kube-dns"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": 1,
+                  "maxUnavailable": 1
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "annotations": {
+                    "scheduler.alpha.kubernetes.io/critical-pod": ""
+                  },
+                  "creationTimestamp": null,
+                  "labels": {
+                    "k8s-app": "kube-dns"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "args": [
+                        "--domain=cluster.local.",
+                        "--dns-port=10053",
+                        "--config-map=kube-dns",
+                        "--v=2"
+                      ],
+                      "env": [
+                        {
+                          "name": "PROMETHEUS_PORT",
+                          "value": "10055"
+                        }
+                      ],
+                      "image": "k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.5",
+                      "imagePullPolicy": "IfNotPresent",
+                      "livenessProbe": {
+                        "failureThreshold": 5,
+                        "httpGet": {
+                          "path": "/healthcheck/kubedns",
+                          "port": 10054,
+                          "scheme": "HTTP"
+                        },
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 5
+                      },
+                      "name": "kubedns",
+                      "ports": [
+                        {
+                          "containerPort": 10053,
+                          "name": "dns-local",
+                          "protocol": "UDP"
+                        },
+                        {
+                          "containerPort": 10053,
+                          "name": "dns-tcp-local",
+                          "protocol": "TCP"
+                        },
+                        {
+                          "containerPort": 10055,
+                          "name": "metrics",
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "readinessProbe": {
+                        "failureThreshold": 3,
+                        "httpGet": {
+                          "path": "/readiness",
+                          "port": 8081,
+                          "scheme": "HTTP"
+                        },
+                        "initialDelaySeconds": 3,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 5
+                      },
+                      "resources": {
+                        "limits": {
+                          "memory": "170Mi"
+                        },
+                        "requests": {
+                          "cpu": "100m",
+                          "memory": "70Mi"
+                        }
+                      },
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/kube-dns-config",
+                          "name": "kube-dns-config"
+                        }
+                      ]
+                    },
+                    {
+                      "args": [
+                        "-v=2",
+                        "-logtostderr",
+                        "-configDir=/etc/k8s/dns/dnsmasq-nanny",
+                        "-restartDnsmasq=true",
+                        "--",
+                        "-k",
+                        "--cache-size=1000",
+                        "--log-facility=-",
+                        "--server=/cluster.local/127.0.0.1#10053",
+                        "--server=/in-addr.arpa/127.0.0.1#10053",
+                        "--server=/ip6.arpa/127.0.0.1#10053"
+                      ],
+                      "image": "k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.5",
+                      "imagePullPolicy": "IfNotPresent",
+                      "livenessProbe": {
+                        "failureThreshold": 5,
+                        "httpGet": {
+                          "path": "/healthcheck/dnsmasq",
+                          "port": 10054,
+                          "scheme": "HTTP"
+                        },
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 5
+                      },
+                      "name": "dnsmasq",
+                      "ports": [
+                        {
+                          "containerPort": 53,
+                          "name": "dns",
+                          "protocol": "UDP"
+                        },
+                        {
+                          "containerPort": 53,
+                          "name": "dns-tcp",
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {
+                        "requests": {
+                          "cpu": "150m",
+                          "memory": "20Mi"
+                        }
+                      },
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File",
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/etc/k8s/dns/dnsmasq-nanny",
+                          "name": "kube-dns-config"
+                        }
+                      ]
+                    },
+                    {
+                      "args": [
+                        "--v=2",
+                        "--logtostderr",
+                        "--probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.cluster.local.,5,A",
+                        "--probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.cluster.local.,5,A"
+                      ],
+                      "image": "k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.5",
+                      "imagePullPolicy": "IfNotPresent",
+                      "livenessProbe": {
+                        "failureThreshold": 5,
+                        "httpGet": {
+                          "path": "/metrics",
+                          "port": 10054,
+                          "scheme": "HTTP"
+                        },
+                        "initialDelaySeconds": 60,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 5
+                      },
+                      "name": "sidecar",
+                      "ports": [
+                        {
+                          "containerPort": 10054,
+                          "name": "metrics",
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {
+                        "requests": {
+                          "cpu": "10m",
+                          "memory": "20Mi"
+                        }
+                      },
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File"
+                    }
+                  ],
+                  "dnsPolicy": "Default",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "terminationGracePeriodSeconds": 30,
+                  "tolerations": [
+                    {
+                      "key": "CriticalAddonsOnly",
+                      "operator": "Exists"
+                    }
+                  ],
+                  "volumes": [
+                    {
+                      "configMap": {
+                        "defaultMode": 420,
+                        "name": "kube-dns",
+                        "optional": true
+                      },
+                      "name": "kube-dns-config"
+                    }
+                  ]
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-12T20:56:24Z",
+                  "lastUpdateTime": "2018-03-12T20:56:24Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "deployment.kubernetes.io/revision": "1",
+                "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"labels\":{\"addonmanager.kubernetes.io/mode\":\"Reconcile\",\"kubernetes.io/minikube-addons\":\"dashboard\",\"version\":\"v1.8.1\"},\"name\":\"kubernetes-dashboard\",\"namespace\":\"kube-system\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"addonmanager.kubernetes.io/mode\":\"Reconcile\",\"app\":\"kubernetes-dashboard\",\"version\":\"v1.8.1\"}},\"template\":{\"metadata\":{\"labels\":{\"addonmanager.kubernetes.io/mode\":\"Reconcile\",\"app\":\"kubernetes-dashboard\",\"version\":\"v1.8.1\"}},\"spec\":{\"containers\":[{\"image\":\"k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.1\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"httpGet\":{\"path\":\"/\",\"port\":9090},\"initialDelaySeconds\":30,\"timeoutSeconds\":30},\"name\":\"kubernetes-dashboard\",\"ports\":[{\"containerPort\":9090,\"protocol\":\"TCP\"}]}]}}}}\n"
+              },
+              "creationTimestamp": "2018-03-12T20:56:24Z",
+              "generation": 1,
+              "labels": {
+                "addonmanager.kubernetes.io/mode": "Reconcile",
+                "kubernetes.io/minikube-addons": "dashboard",
+                "version": "v1.8.1"
+              },
+              "name": "kubernetes-dashboard",
+              "namespace": "kube-system",
+              "resourceVersion": "81512",
+              "selfLink": "/apis/extensions/v1beta1/namespaces/kube-system/deployments/kubernetes-dashboard",
+              "uid": "d316c03b-2637-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "progressDeadlineSeconds": 600,
+              "replicas": 1,
+              "revisionHistoryLimit": 10,
+              "selector": {
+                "matchLabels": {
+                  "addonmanager.kubernetes.io/mode": "Reconcile",
+                  "app": "kubernetes-dashboard",
+                  "version": "v1.8.1"
+                }
+              },
+              "strategy": {
+                "rollingUpdate": {
+                  "maxSurge": "25%",
+                  "maxUnavailable": "25%"
+                },
+                "type": "RollingUpdate"
+              },
+              "template": {
+                "metadata": {
+                  "creationTimestamp": null,
+                  "labels": {
+                    "addonmanager.kubernetes.io/mode": "Reconcile",
+                    "app": "kubernetes-dashboard",
+                    "version": "v1.8.1"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "image": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.1",
+                      "imagePullPolicy": "IfNotPresent",
+                      "livenessProbe": {
+                        "failureThreshold": 3,
+                        "httpGet": {
+                          "path": "/",
+                          "port": 9090,
+                          "scheme": "HTTP"
+                        },
+                        "initialDelaySeconds": 30,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 30
+                      },
+                      "name": "kubernetes-dashboard",
+                      "ports": [
+                        {
+                          "containerPort": 9090,
+                          "protocol": "TCP"
+                        }
+                      ],
+                      "resources": {},
+                      "terminationMessagePath": "/dev/termination-log",
+                      "terminationMessagePolicy": "File"
+                    }
+                  ],
+                  "dnsPolicy": "ClusterFirst",
+                  "restartPolicy": "Always",
+                  "schedulerName": "default-scheduler",
+                  "securityContext": {},
+                  "terminationGracePeriodSeconds": 30
+                }
+              }
+            },
+            "status": {
+              "availableReplicas": 1,
+              "conditions": [
+                {
+                  "lastTransitionTime": "2018-03-12T20:56:24Z",
+                  "lastUpdateTime": "2018-03-12T20:56:26Z",
+                  "message": "ReplicaSet \"kubernetes-dashboard-77d8b98585\" has successfully progressed.",
+                  "reason": "NewReplicaSetAvailable",
+                  "status": "True",
+                  "type": "Progressing"
+                },
+                {
+                  "lastTransitionTime": "2018-03-21T13:04:40Z",
+                  "lastUpdateTime": "2018-03-21T13:04:40Z",
+                  "message": "Deployment has minimum availability.",
+                  "reason": "MinimumReplicasAvailable",
+                  "status": "True",
+                  "type": "Available"
+                }
+              ],
+              "observedGeneration": 1,
+              "readyReplicas": 1,
+              "replicas": 1,
+              "updatedReplicas": 1
+            }
+          }
+        ],
+        "kind": "DeploymentList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/apis/extensions/v1beta1/namespaces/kube-system/deployments"
+        }
+      }
+    ],
+    "namespaces": {
+      "apiVersion": "v1",
+      "items": [
+        {
+          "metadata": {
+            "creationTimestamp": "2018-03-12T20:56:10Z",
+            "name": "default",
+            "resourceVersion": "4",
+            "selfLink": "/api/v1/namespaces/default",
+            "uid": "cb358f5e-2637-11e8-86c1-0800274b92f0"
+          },
+          "spec": {
+            "finalizers": [
+              "kubernetes"
+            ]
+          },
+          "status": {
+            "phase": "Active"
+          }
+        },
+        {
+          "metadata": {
+            "annotations": {
+              "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"istio-system\",\"namespace\":\"\"}}\n"
+            },
+            "creationTimestamp": "2018-03-21T13:05:24Z",
+            "name": "istio-system",
+            "resourceVersion": "81567",
+            "selfLink": "/api/v1/namespaces/istio-system",
+            "uid": "84ad1fb0-2d08-11e8-aaa1-0800274b92f0"
+          },
+          "spec": {
+            "finalizers": [
+              "kubernetes"
+            ]
+          },
+          "status": {
+            "phase": "Active"
+          }
+        },
+        {
+          "metadata": {
+            "creationTimestamp": "2018-03-12T20:56:10Z",
+            "name": "kube-public",
+            "resourceVersion": "9",
+            "selfLink": "/api/v1/namespaces/kube-public",
+            "uid": "cb382f26-2637-11e8-86c1-0800274b92f0"
+          },
+          "spec": {
+            "finalizers": [
+              "kubernetes"
+            ]
+          },
+          "status": {
+            "phase": "Active"
+          }
+        },
+        {
+          "metadata": {
+            "annotations": {
+              "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Namespace\",\"metadata\":{\"annotations\":{},\"name\":\"kube-system\",\"namespace\":\"\"}}\n"
+            },
+            "creationTimestamp": "2018-03-12T20:56:10Z",
+            "name": "kube-system",
+            "resourceVersion": "76",
+            "selfLink": "/api/v1/namespaces/kube-system",
+            "uid": "cb37d060-2637-11e8-86c1-0800274b92f0"
+          },
+          "spec": {
+            "finalizers": [
+              "kubernetes"
+            ]
+          },
+          "status": {
+            "phase": "Active"
+          }
+        }
+      ],
+      "kind": "NamespaceList",
+      "metadata": {
+        "resourceVersion": "94845",
+        "selfLink": "/api/v1/namespaces"
+      }
+    },
+    "pods": [
+      {
+        "apiVersion": "v1",
+        "items": [
+          {
+            "metadata": {
+              "creationTimestamp": "2018-03-13T17:14:01Z",
+              "labels": {
+                "run": "kubernetes-job"
+              },
+              "name": "kubernetes-job",
+              "namespace": "default",
+              "resourceVersion": "17849",
+              "selfLink": "/api/v1/namespaces/default/pods/kubernetes-job",
+              "uid": "ecd8cd92-26e1-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "chaostoolkit/kubernetes-job",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "kubernetes-job",
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-rq68k",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Never",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "default",
+              "serviceAccountName": "default",
+              "terminationGracePeriodSeconds": 30,
+              "volumes": [
+                {
+                  "name": "default-token-rq68k",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-rq68k"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-13T17:14:01Z",
+                  "reason": "PodCompleted",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-13T17:14:01Z",
+                  "reason": "PodCompleted",
+                  "status": "False",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-13T17:14:01Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://3157c6a739125dc7bc2bae86801e3a6df699ddd95d4f6e626f14257ace67de21",
+                  "image": "chaostoolkit/kubernetes-job:latest",
+                  "imageID": "docker://sha256:7ac8288e0256141824af822683000266dfeb47273e3ee2c1ccd167f92f6f9d8a",
+                  "lastState": {},
+                  "name": "kubernetes-job",
+                  "ready": false,
+                  "restartCount": 0,
+                  "state": {
+                    "terminated": {
+                      "containerID": "docker://3157c6a739125dc7bc2bae86801e3a6df699ddd95d4f6e626f14257ace67de21",
+                      "exitCode": 0,
+                      "finishedAt": "2018-03-13T17:14:02Z",
+                      "reason": "Completed",
+                      "startedAt": "2018-03-13T17:14:02Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Succeeded",
+              "podIP": "172.17.0.8",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-13T17:14:01Z"
+            }
+          },
+          {
+            "metadata": {
+              "creationTimestamp": "2018-03-21T12:58:52Z",
+              "generateName": "my-consumer-app-5f68b99f59-",
+              "labels": {
+                "biz-app-id": "retail",
+                "name": "my-consumer-app",
+                "pod-template-hash": "1924655915",
+                "service": "my-consumer-service"
+              },
+              "name": "my-consumer-app-5f68b99f59-r24hh",
+              "namespace": "default",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "my-consumer-app-5f68b99f59",
+                  "uid": "d0c30cbc-27b3-11e8-86c1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81516",
+              "selfLink": "/api/v1/namespaces/default/pods/my-consumer-app-5f68b99f59-r24hh",
+              "uid": "9afc5ee4-2d07-11e8-8e81-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "chaostoolkit/simple-boot-feign-direct-microservice-consumer:before",
+                  "imagePullPolicy": "Always",
+                  "name": "my-consumer-app",
+                  "ports": [
+                    {
+                      "containerPort": 8080,
+                      "name": "http",
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {
+                    "limits": {
+                      "cpu": "400m",
+                      "memory": "512Mi"
+                    },
+                    "requests": {
+                      "cpu": "200m",
+                      "memory": "256Mi"
+                    }
+                  },
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-rq68k",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "default",
+              "serviceAccountName": "default",
+              "terminationGracePeriodSeconds": 30,
+              "volumes": [
+                {
+                  "name": "default-token-rq68k",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-rq68k"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T12:58:52Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:41Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T12:58:52Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://a432e802dc49863a6b9599951d1181cfae14bc2baa87c6a4958ae19998c7335f",
+                  "image": "chaostoolkit/simple-boot-feign-direct-microservice-consumer:before",
+                  "imageID": "docker-pullable://chaostoolkit/simple-boot-feign-direct-microservice-consumer@sha256:044e20e643221b6040a3ea88188065d75e131ad37cd55237075def608d5486f1",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://88dbb53cb8521d24e83673ddb2c64ab0c05fddba371d41bb6e0278d639c4b693",
+                      "exitCode": 143,
+                      "finishedAt": "2018-03-21T13:03:12Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-21T12:58:54Z"
+                    }
+                  },
+                  "name": "my-consumer-app",
+                  "ready": true,
+                  "restartCount": 1,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:40Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.3",
+              "qosClass": "Burstable",
+              "startTime": "2018-03-21T12:58:52Z"
+            }
+          },
+          {
+            "metadata": {
+              "creationTimestamp": "2018-03-21T12:58:52Z",
+              "generateName": "my-provider-app-775f76fb97-",
+              "labels": {
+                "biz-app-id": "retail",
+                "name": "my-provider-app",
+                "pod-template-hash": "3319329653",
+                "service": "my-provider-service"
+              },
+              "name": "my-provider-app-775f76fb97-lb896",
+              "namespace": "default",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "my-provider-app-775f76fb97",
+                  "uid": "9b007380-2d07-11e8-8e81-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81530",
+              "selfLink": "/api/v1/namespaces/default/pods/my-provider-app-775f76fb97-lb896",
+              "uid": "9b02ca0d-2d07-11e8-8e81-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "chaostoolkit/simple-microservice-provider:before",
+                  "imagePullPolicy": "Always",
+                  "name": "my-provider-app",
+                  "ports": [
+                    {
+                      "containerPort": 8080,
+                      "name": "http",
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {
+                    "limits": {
+                      "cpu": "400m",
+                      "memory": "256Mi"
+                    },
+                    "requests": {
+                      "cpu": "200m",
+                      "memory": "256Mi"
+                    }
+                  },
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-rq68k",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "default",
+              "serviceAccountName": "default",
+              "terminationGracePeriodSeconds": 30,
+              "volumes": [
+                {
+                  "name": "default-token-rq68k",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-rq68k"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T12:58:52Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:42Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T12:58:52Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://a0a6ac594625a5ff5d5b8f70328b94c009549848a5f65ef738e858113590c230",
+                  "image": "chaostoolkit/simple-microservice-provider:before",
+                  "imageID": "docker-pullable://chaostoolkit/simple-microservice-provider@sha256:fa8e59fd3dd067125e9d90c8f9dec2e6fc6cb43430d87f1f5db4314275d43381",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://c424bad88a148193335cf30a4136eb98d219d9ec2a26b75d93240794613e9fef",
+                      "exitCode": 143,
+                      "finishedAt": "2018-03-21T13:03:12Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-21T12:58:56Z"
+                    }
+                  },
+                  "name": "my-provider-app",
+                  "ready": true,
+                  "restartCount": 1,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:41Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.4",
+              "qosClass": "Burstable",
+              "startTime": "2018-03-21T12:58:52Z"
+            }
+          }
+        ],
+        "kind": "PodList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/api/v1/namespaces/default/pods"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "items": [
+          {
+            "metadata": {
+              "annotations": {
+                "sidecar.istio.io/inject": "false"
+              },
+              "creationTimestamp": "2018-03-21T13:05:25Z",
+              "generateName": "istio-ca-59f6dcb7d9-",
+              "labels": {
+                "istio": "istio-ca",
+                "pod-template-hash": "1592876385"
+              },
+              "name": "istio-ca-59f6dcb7d9-fb8md",
+              "namespace": "istio-system",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "istio-ca-59f6dcb7d9",
+                  "uid": "855c3c9f-2d08-11e8-aaa1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81819",
+              "selfLink": "/api/v1/namespaces/istio-system/pods/istio-ca-59f6dcb7d9-fb8md",
+              "uid": "855e512d-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "args": [
+                    "--istio-ca-storage-namespace=istio-system",
+                    "--grpc-port=8060",
+                    "--grpc-hostname=istio-ca",
+                    "--self-signed-ca=true",
+                    "--logtostderr",
+                    "--stderrthreshold",
+                    "INFO"
+                  ],
+                  "command": [
+                    "/usr/local/bin/istio_ca"
+                  ],
+                  "image": "docker.io/istio/istio-ca:0.6.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "istio-ca",
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-ca-service-account-token-zg7mg",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "istio-ca-service-account",
+              "serviceAccountName": "istio-ca-service-account",
+              "terminationGracePeriodSeconds": 30,
+              "tolerations": [
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/not-ready",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                },
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/unreachable",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                }
+              ],
+              "volumes": [
+                {
+                  "name": "istio-ca-service-account-token-zg7mg",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "istio-ca-service-account-token-zg7mg"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:54Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://e64b77081f7e212cd7196556db2ce0b6f446ffa5c778aec03b194a419269aaa4",
+                  "image": "istio/istio-ca:0.6.0",
+                  "imageID": "docker-pullable://istio/istio-ca@sha256:daeeb070fd2dc9ff6c2718eff579839033a9745140e80e79b3218f0d53e7d227",
+                  "lastState": {},
+                  "name": "istio-ca",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:05:54Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.9",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-21T13:05:25Z"
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "sidecar.istio.io/inject": "false"
+              },
+              "creationTimestamp": "2018-03-21T13:05:25Z",
+              "generateName": "istio-ingress-779649ff5b-",
+              "labels": {
+                "istio": "ingress",
+                "pod-template-hash": "3352059916"
+              },
+              "name": "istio-ingress-779649ff5b-bfwlx",
+              "namespace": "istio-system",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "istio-ingress-779649ff5b",
+                  "uid": "8553ec58-2d08-11e8-aaa1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81808",
+              "selfLink": "/api/v1/namespaces/istio-system/pods/istio-ingress-779649ff5b-bfwlx",
+              "uid": "85546d52-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "args": [
+                    "proxy",
+                    "ingress",
+                    "-v",
+                    "2",
+                    "--discoveryAddress",
+                    "istio-pilot:15003",
+                    "--discoveryRefreshDelay",
+                    "1s",
+                    "--drainDuration",
+                    "45s",
+                    "--parentShutdownDuration",
+                    "1m0s",
+                    "--connectTimeout",
+                    "10s",
+                    "--serviceCluster",
+                    "istio-ingress",
+                    "--zipkinAddress",
+                    "zipkin:9411",
+                    "--statsdUdpAddress",
+                    "istio-mixer:9125",
+                    "--proxyAdminPort",
+                    "15000",
+                    "--controlPlaneAuthPolicy",
+                    "NONE"
+                  ],
+                  "env": [
+                    {
+                      "name": "POD_NAME",
+                      "valueFrom": {
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.name"
+                        }
+                      }
+                    },
+                    {
+                      "name": "POD_NAMESPACE",
+                      "valueFrom": {
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    }
+                  ],
+                  "image": "docker.io/istio/proxy:0.6.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "istio-ingress",
+                  "ports": [
+                    {
+                      "containerPort": 80,
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 443,
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/certs",
+                      "name": "istio-certs",
+                      "readOnly": true
+                    },
+                    {
+                      "mountPath": "/etc/istio/ingress-certs",
+                      "name": "ingress-certs",
+                      "readOnly": true
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-ingress-service-account-token-pg5zj",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "istio-ingress-service-account",
+              "serviceAccountName": "istio-ingress-service-account",
+              "terminationGracePeriodSeconds": 30,
+              "tolerations": [
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/not-ready",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                },
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/unreachable",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                }
+              ],
+              "volumes": [
+                {
+                  "name": "istio-certs",
+                  "secret": {
+                    "defaultMode": 420,
+                    "optional": true,
+                    "secretName": "istio.default"
+                  }
+                },
+                {
+                  "name": "ingress-certs",
+                  "secret": {
+                    "defaultMode": 420,
+                    "optional": true,
+                    "secretName": "istio-ingress-certs"
+                  }
+                },
+                {
+                  "name": "istio-ingress-service-account-token-pg5zj",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "istio-ingress-service-account-token-pg5zj"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:51Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://6007913a5192ba06286c6de45d9cebbe5dee94ce5846bacf2cca9ce3ec4485c4",
+                  "image": "istio/proxy:0.6.0",
+                  "imageID": "docker-pullable://istio/proxy@sha256:51ec13f9708238351a8bee3c69cf0cf96483eeb03a9909dea12306bbeb1d1a9d",
+                  "lastState": {},
+                  "name": "istio-ingress",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:05:50Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.8",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-21T13:05:25Z"
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "sidecar.istio.io/inject": "false"
+              },
+              "creationTimestamp": "2018-03-21T13:05:24Z",
+              "generateName": "istio-mixer-7f4fd7dff-",
+              "labels": {
+                "istio": "mixer",
+                "pod-template-hash": "390983899"
+              },
+              "name": "istio-mixer-7f4fd7dff-qsn4g",
+              "namespace": "istio-system",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "istio-mixer-7f4fd7dff",
+                  "uid": "84c3f439-2d08-11e8-aaa1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81841",
+              "selfLink": "/api/v1/namespaces/istio-system/pods/istio-mixer-7f4fd7dff-qsn4g",
+              "uid": "84c7e64a-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "args": [
+                    "-statsd.mapping-config=/etc/statsd/mapping.conf"
+                  ],
+                  "image": "prom/statsd-exporter:v0.5.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "statsd-to-prometheus",
+                  "ports": [
+                    {
+                      "containerPort": 9102,
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 9125,
+                      "protocol": "UDP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/statsd",
+                      "name": "config-volume"
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-mixer-service-account-token-q9dsz",
+                      "readOnly": true
+                    }
+                  ]
+                },
+                {
+                  "args": [
+                    "--configStoreURL=k8s://",
+                    "--configDefaultNamespace=istio-system",
+                    "--zipkinURL=http://zipkin:9411/api/v1/spans",
+                    "--logtostderr",
+                    "-v",
+                    "2"
+                  ],
+                  "image": "docker.io/istio/mixer:0.6.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "mixer",
+                  "ports": [
+                    {
+                      "containerPort": 9091,
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 9093,
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 9094,
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 42422,
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-mixer-service-account-token-q9dsz",
+                      "readOnly": true
+                    }
+                  ]
+                },
+                {
+                  "args": [
+                    "proxy",
+                    "mixer",
+                    "-v",
+                    "2",
+                    "--controlPlaneAuthPolicy",
+                    "NONE",
+                    "--customConfigFile",
+                    "/etc/istio/proxy/envoy_mixer.json"
+                  ],
+                  "image": "docker.io/istio/proxy:0.6.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "istio-proxy",
+                  "ports": [
+                    {
+                      "containerPort": 15004,
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/certs",
+                      "name": "istio-certs",
+                      "readOnly": true
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-mixer-service-account-token-q9dsz",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "istio-mixer-service-account",
+              "serviceAccountName": "istio-mixer-service-account",
+              "terminationGracePeriodSeconds": 30,
+              "tolerations": [
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/not-ready",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                },
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/unreachable",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                }
+              ],
+              "volumes": [
+                {
+                  "name": "istio-certs",
+                  "secret": {
+                    "defaultMode": 420,
+                    "optional": true,
+                    "secretName": "istio.istio-mixer-service-account"
+                  }
+                },
+                {
+                  "configMap": {
+                    "defaultMode": 420,
+                    "name": "istio-mixer"
+                  },
+                  "name": "config-volume"
+                },
+                {
+                  "name": "istio-mixer-service-account-token-q9dsz",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "istio-mixer-service-account-token-q9dsz"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:24Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:06:01Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:24Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://4db9a37de86f254a77de67e439b2c545336e327d2509f3d65032ce96009fa582",
+                  "image": "istio/proxy:0.6.0",
+                  "imageID": "docker-pullable://istio/proxy@sha256:51ec13f9708238351a8bee3c69cf0cf96483eeb03a9909dea12306bbeb1d1a9d",
+                  "lastState": {},
+                  "name": "istio-proxy",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:06:00Z"
+                    }
+                  }
+                },
+                {
+                  "containerID": "docker://f1b3faed3859c1c6ade5f5511e88bbd63dc8029d7f19c2a25c0ec2a93c491893",
+                  "image": "istio/mixer:0.6.0",
+                  "imageID": "docker-pullable://istio/mixer@sha256:9b717e31bc0716fe0a06dafbbd704c5190318c30003abe48619fbb86f5d7ed71",
+                  "lastState": {},
+                  "name": "mixer",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:06:00Z"
+                    }
+                  }
+                },
+                {
+                  "containerID": "docker://b139d3a7ca0dd6d3995d56f7578470cca2a0f8abefb49389aa4cb6f6f6c70bcd",
+                  "image": "prom/statsd-exporter:v0.5.0",
+                  "imageID": "docker-pullable://prom/statsd-exporter@sha256:d08dd0db8eaaf716089d6914ed0236a794d140f4a0fe1fd165cda3e673d1ed4c",
+                  "lastState": {},
+                  "name": "statsd-to-prometheus",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:05:28Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.6",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-21T13:05:24Z"
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "sidecar.istio.io/inject": "false"
+              },
+              "creationTimestamp": "2018-03-21T13:05:25Z",
+              "generateName": "istio-pilot-5f5f76ddc8-",
+              "labels": {
+                "istio": "pilot",
+                "pod-template-hash": "1919328874"
+              },
+              "name": "istio-pilot-5f5f76ddc8-q7dlg",
+              "namespace": "istio-system",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "istio-pilot-5f5f76ddc8",
+                  "uid": "85474671-2d08-11e8-aaa1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81850",
+              "selfLink": "/api/v1/namespaces/istio-system/pods/istio-pilot-5f5f76ddc8-q7dlg",
+              "uid": "8547e320-2d08-11e8-aaa1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "args": [
+                    "discovery",
+                    "-v",
+                    "2",
+                    "--admission-service",
+                    "istio-pilot"
+                  ],
+                  "env": [
+                    {
+                      "name": "POD_NAME",
+                      "valueFrom": {
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.name"
+                        }
+                      }
+                    },
+                    {
+                      "name": "POD_NAMESPACE",
+                      "valueFrom": {
+                        "fieldRef": {
+                          "apiVersion": "v1",
+                          "fieldPath": "metadata.namespace"
+                        }
+                      }
+                    },
+                    {
+                      "name": "PILOT_THROTTLE",
+                      "value": "200"
+                    }
+                  ],
+                  "image": "docker.io/istio/pilot:0.6.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "discovery",
+                  "ports": [
+                    {
+                      "containerPort": 8080,
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 443,
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/istio/config",
+                      "name": "config-volume"
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-pilot-service-account-token-7wctb",
+                      "readOnly": true
+                    }
+                  ]
+                },
+                {
+                  "args": [
+                    "proxy",
+                    "pilot",
+                    "-v",
+                    "2",
+                    "--discoveryAddress",
+                    "istio-pilot:15003",
+                    "--controlPlaneAuthPolicy",
+                    "NONE",
+                    "--customConfigFile",
+                    "/etc/istio/proxy/envoy_pilot.json"
+                  ],
+                  "image": "docker.io/istio/proxy:0.6.0",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "istio-proxy",
+                  "ports": [
+                    {
+                      "containerPort": 15003,
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/certs",
+                      "name": "istio-certs",
+                      "readOnly": true
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "istio-pilot-service-account-token-7wctb",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "istio-pilot-service-account",
+              "serviceAccountName": "istio-pilot-service-account",
+              "terminationGracePeriodSeconds": 30,
+              "tolerations": [
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/not-ready",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                },
+                {
+                  "effect": "NoExecute",
+                  "key": "node.kubernetes.io/unreachable",
+                  "operator": "Exists",
+                  "tolerationSeconds": 300
+                }
+              ],
+              "volumes": [
+                {
+                  "configMap": {
+                    "defaultMode": 420,
+                    "name": "istio"
+                  },
+                  "name": "config-volume"
+                },
+                {
+                  "name": "istio-certs",
+                  "secret": {
+                    "defaultMode": 420,
+                    "optional": true,
+                    "secretName": "istio.istio-pilot-service-account"
+                  }
+                },
+                {
+                  "name": "istio-pilot-service-account-token-7wctb",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "istio-pilot-service-account-token-7wctb"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:06:02Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:05:25Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://c0687a9ecf64df10b64e6b9c575f09f860a980851031f28c58e208caccf9bfd6",
+                  "image": "istio/pilot:0.6.0",
+                  "imageID": "docker-pullable://istio/pilot@sha256:49d7af1bf420e45db0fc59af38bb45ad9749bcff2a9d5dc63a6b4d3a41ef00d7",
+                  "lastState": {},
+                  "name": "discovery",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:05:31Z"
+                    }
+                  }
+                },
+                {
+                  "containerID": "docker://28d789d84680d4cc0121f09eb9d875b84c02cd334cce502dc0f891ad1678944f",
+                  "image": "istio/proxy:0.6.0",
+                  "imageID": "docker-pullable://istio/proxy@sha256:51ec13f9708238351a8bee3c69cf0cf96483eeb03a9909dea12306bbeb1d1a9d",
+                  "lastState": {},
+                  "name": "istio-proxy",
+                  "ready": true,
+                  "restartCount": 0,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:06:02Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.7",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-21T13:05:25Z"
+            }
+          }
+        ],
+        "kind": "PodList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/api/v1/namespaces/istio-system/pods"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "items": [],
+        "kind": "PodList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/api/v1/namespaces/kube-public/pods"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "items": [
+          {
+            "metadata": {
+              "annotations": {
+                "kubernetes.io/config.hash": "c4c3188325a93a2d7fb1714e1abf1259",
+                "kubernetes.io/config.mirror": "c4c3188325a93a2d7fb1714e1abf1259",
+                "kubernetes.io/config.seen": "2018-03-12T20:56:14.918224538Z",
+                "kubernetes.io/config.source": "file"
+              },
+              "creationTimestamp": "2018-03-12T20:56:19Z",
+              "labels": {
+                "component": "kube-addon-manager",
+                "kubernetes.io/minikube-addons": "addon-manager",
+                "version": "v6.5"
+              },
+              "name": "kube-addon-manager-minikube",
+              "namespace": "kube-system",
+              "resourceVersion": "81495",
+              "selfLink": "/api/v1/namespaces/kube-system/pods/kube-addon-manager-minikube",
+              "uid": "d099513b-2637-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "env": [
+                    {
+                      "name": "KUBECONFIG",
+                      "value": "/var/lib/localkube/kubeconfig"
+                    }
+                  ],
+                  "image": "gcr.io/google-containers/kube-addon-manager:v6.5",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "kube-addon-manager",
+                  "resources": {
+                    "requests": {
+                      "cpu": "5m",
+                      "memory": "50Mi"
+                    }
+                  },
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/kubernetes/",
+                      "name": "addons",
+                      "readOnly": true
+                    },
+                    {
+                      "mountPath": "/var/lib/localkube/",
+                      "name": "kubeconfig",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "hostNetwork": true,
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "terminationGracePeriodSeconds": 30,
+              "tolerations": [
+                {
+                  "effect": "NoExecute",
+                  "operator": "Exists"
+                }
+              ],
+              "volumes": [
+                {
+                  "hostPath": {
+                    "path": "/etc/kubernetes/",
+                    "type": ""
+                  },
+                  "name": "addons"
+                },
+                {
+                  "hostPath": {
+                    "path": "/var/lib/localkube/",
+                    "type": ""
+                  },
+                  "name": "kubeconfig"
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:19Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:38Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:36Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://ee2ffb4a49547d95544b7248b003ff64a50fc7f8cffe38597e1c0aa5055f61d2",
+                  "image": "gcr.io/google-containers/kube-addon-manager:v6.5",
+                  "imageID": "docker://sha256:d166ffa9201aa156eb76d3a221c3fdab07bb1a0b6407548b1b1f03dc111c0e39",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://7d1aec7259a51b81525562651b744d460a0b1778338a05c669c46c154e2d2864",
+                      "exitCode": 137,
+                      "finishedAt": "2018-03-21T13:03:22Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-19T20:14:59Z"
+                    }
+                  },
+                  "name": "kube-addon-manager",
+                  "ready": true,
+                  "restartCount": 3,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:37Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "192.168.99.100",
+              "qosClass": "Burstable",
+              "startTime": "2018-03-12T20:56:19Z"
+            }
+          },
+          {
+            "metadata": {
+              "annotations": {
+                "scheduler.alpha.kubernetes.io/critical-pod": ""
+              },
+              "creationTimestamp": "2018-03-12T20:56:24Z",
+              "generateName": "kube-dns-54cccfbdf8-",
+              "labels": {
+                "k8s-app": "kube-dns",
+                "pod-template-hash": "1077796894"
+              },
+              "name": "kube-dns-54cccfbdf8-8t6qj",
+              "namespace": "kube-system",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "kube-dns-54cccfbdf8",
+                  "uid": "d3311a13-2637-11e8-86c1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81541",
+              "selfLink": "/api/v1/namespaces/kube-system/pods/kube-dns-54cccfbdf8-8t6qj",
+              "uid": "d333a5fb-2637-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "args": [
+                    "--domain=cluster.local.",
+                    "--dns-port=10053",
+                    "--config-map=kube-dns",
+                    "--v=2"
+                  ],
+                  "env": [
+                    {
+                      "name": "PROMETHEUS_PORT",
+                      "value": "10055"
+                    }
+                  ],
+                  "image": "k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.5",
+                  "imagePullPolicy": "IfNotPresent",
+                  "livenessProbe": {
+                    "failureThreshold": 5,
+                    "httpGet": {
+                      "path": "/healthcheck/kubedns",
+                      "port": 10054,
+                      "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 60,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 5
+                  },
+                  "name": "kubedns",
+                  "ports": [
+                    {
+                      "containerPort": 10053,
+                      "name": "dns-local",
+                      "protocol": "UDP"
+                    },
+                    {
+                      "containerPort": 10053,
+                      "name": "dns-tcp-local",
+                      "protocol": "TCP"
+                    },
+                    {
+                      "containerPort": 10055,
+                      "name": "metrics",
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "readinessProbe": {
+                    "failureThreshold": 3,
+                    "httpGet": {
+                      "path": "/readiness",
+                      "port": 8081,
+                      "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 3,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 5
+                  },
+                  "resources": {
+                    "limits": {
+                      "memory": "170Mi"
+                    },
+                    "requests": {
+                      "cpu": "100m",
+                      "memory": "70Mi"
+                    }
+                  },
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/kube-dns-config",
+                      "name": "kube-dns-config"
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-9dwxx",
+                      "readOnly": true
+                    }
+                  ]
+                },
+                {
+                  "args": [
+                    "-v=2",
+                    "-logtostderr",
+                    "-configDir=/etc/k8s/dns/dnsmasq-nanny",
+                    "-restartDnsmasq=true",
+                    "--",
+                    "-k",
+                    "--cache-size=1000",
+                    "--log-facility=-",
+                    "--server=/cluster.local/127.0.0.1#10053",
+                    "--server=/in-addr.arpa/127.0.0.1#10053",
+                    "--server=/ip6.arpa/127.0.0.1#10053"
+                  ],
+                  "image": "k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.5",
+                  "imagePullPolicy": "IfNotPresent",
+                  "livenessProbe": {
+                    "failureThreshold": 5,
+                    "httpGet": {
+                      "path": "/healthcheck/dnsmasq",
+                      "port": 10054,
+                      "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 60,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 5
+                  },
+                  "name": "dnsmasq",
+                  "ports": [
+                    {
+                      "containerPort": 53,
+                      "name": "dns",
+                      "protocol": "UDP"
+                    },
+                    {
+                      "containerPort": 53,
+                      "name": "dns-tcp",
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {
+                    "requests": {
+                      "cpu": "150m",
+                      "memory": "20Mi"
+                    }
+                  },
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/etc/k8s/dns/dnsmasq-nanny",
+                      "name": "kube-dns-config"
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-9dwxx",
+                      "readOnly": true
+                    }
+                  ]
+                },
+                {
+                  "args": [
+                    "--v=2",
+                    "--logtostderr",
+                    "--probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.cluster.local.,5,A",
+                    "--probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.cluster.local.,5,A"
+                  ],
+                  "image": "k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.5",
+                  "imagePullPolicy": "IfNotPresent",
+                  "livenessProbe": {
+                    "failureThreshold": 5,
+                    "httpGet": {
+                      "path": "/metrics",
+                      "port": 10054,
+                      "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 60,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 5
+                  },
+                  "name": "sidecar",
+                  "ports": [
+                    {
+                      "containerPort": 10054,
+                      "name": "metrics",
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {
+                    "requests": {
+                      "cpu": "10m",
+                      "memory": "20Mi"
+                    }
+                  },
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-9dwxx",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "Default",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "default",
+              "serviceAccountName": "default",
+              "terminationGracePeriodSeconds": 30,
+              "tolerations": [
+                {
+                  "key": "CriticalAddonsOnly",
+                  "operator": "Exists"
+                }
+              ],
+              "volumes": [
+                {
+                  "configMap": {
+                    "defaultMode": 420,
+                    "name": "kube-dns",
+                    "optional": true
+                  },
+                  "name": "kube-dns-config"
+                },
+                {
+                  "name": "default-token-9dwxx",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-9dwxx"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:25Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:47Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:25Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://7b56a59c91d0eec6960e00915bc94f3829ebc969469599f3bfe9df7f8b9d73c7",
+                  "image": "k8s.gcr.io/k8s-dns-dnsmasq-nanny-amd64:1.14.5",
+                  "imageID": "docker://sha256:459944ce8cc4f08ebade5c05bb884e4da053d73e61ec6afe82a0b1687317254c",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://c78c502c78857934592fa637b9501df881bf6b37152233d9ba6686cdcc0427ba",
+                      "exitCode": 137,
+                      "finishedAt": "2018-03-21T13:03:22Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-19T20:14:24Z"
+                    }
+                  },
+                  "name": "dnsmasq",
+                  "ready": true,
+                  "restartCount": 2,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:39Z"
+                    }
+                  }
+                },
+                {
+                  "containerID": "docker://c53a6b844e62b7cd09812e0ae718f7b0c2ad441c31edbc21ea0f7465933c58dd",
+                  "image": "k8s.gcr.io/k8s-dns-kube-dns-amd64:1.14.5",
+                  "imageID": "docker://sha256:512cd7425a731bee1f2a3e4c825fc1cfe516c8b7905874f24bee6da12801d663",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://fe6334a54e54d1b7e5a757aec92b72b2e9737272f177ea3d1f3dc92d2867c688",
+                      "exitCode": 137,
+                      "finishedAt": "2018-03-21T13:03:22Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-19T20:14:24Z"
+                    }
+                  },
+                  "name": "kubedns",
+                  "ready": true,
+                  "restartCount": 2,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:38Z"
+                    }
+                  }
+                },
+                {
+                  "containerID": "docker://4814ca9126594affe7dc16d0f075289ec09e56acd743f527de2b742b611d1ed0",
+                  "image": "k8s.gcr.io/k8s-dns-sidecar-amd64:1.14.5",
+                  "imageID": "docker://sha256:fed89e8b4248a788655d528d96fe644aff012879c782784cd486ff6894ef89f6",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://ba6160610326a2cd548178282c6c0a603fcac6902e6e15970c3699dcc991b92a",
+                      "exitCode": 2,
+                      "finishedAt": "2018-03-21T13:03:12Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-19T20:14:25Z"
+                    }
+                  },
+                  "name": "sidecar",
+                  "ready": true,
+                  "restartCount": 2,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:39Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.2",
+              "qosClass": "Burstable",
+              "startTime": "2018-03-12T20:56:25Z"
+            }
+          },
+          {
+            "metadata": {
+              "creationTimestamp": "2018-03-12T20:56:24Z",
+              "generateName": "kubernetes-dashboard-77d8b98585-",
+              "labels": {
+                "addonmanager.kubernetes.io/mode": "Reconcile",
+                "app": "kubernetes-dashboard",
+                "pod-template-hash": "3384654141",
+                "version": "v1.8.1"
+              },
+              "name": "kubernetes-dashboard-77d8b98585-q56xn",
+              "namespace": "kube-system",
+              "ownerReferences": [
+                {
+                  "apiVersion": "extensions/v1beta1",
+                  "blockOwnerDeletion": true,
+                  "controller": true,
+                  "kind": "ReplicaSet",
+                  "name": "kubernetes-dashboard-77d8b98585",
+                  "uid": "d31775a5-2637-11e8-86c1-0800274b92f0"
+                }
+              ],
+              "resourceVersion": "81508",
+              "selfLink": "/api/v1/namespaces/kube-system/pods/kubernetes-dashboard-77d8b98585-q56xn",
+              "uid": "d319259b-2637-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "image": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.1",
+                  "imagePullPolicy": "IfNotPresent",
+                  "livenessProbe": {
+                    "failureThreshold": 3,
+                    "httpGet": {
+                      "path": "/",
+                      "port": 9090,
+                      "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 30,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 30
+                  },
+                  "name": "kubernetes-dashboard",
+                  "ports": [
+                    {
+                      "containerPort": 9090,
+                      "protocol": "TCP"
+                    }
+                  ],
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-9dwxx",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "default",
+              "serviceAccountName": "default",
+              "terminationGracePeriodSeconds": 30,
+              "volumes": [
+                {
+                  "name": "default-token-9dwxx",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-9dwxx"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:25Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:40Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:25Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://2f28a1ad2c6f8aceaf844f7890a896681bc5693b49b5b731517dd439f884ac81",
+                  "image": "k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.1",
+                  "imageID": "docker://sha256:e94d2f21bc0c297cb74c1dfdd23e2eace013f532c60726601af67984d97f718a",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://a4b79acc44e412d3512c54f4855564a62ad762e32a83eb004b4664b73f60b130",
+                      "exitCode": 2,
+                      "finishedAt": "2018-03-21T13:03:12Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-19T20:14:44Z"
+                    }
+                  },
+                  "name": "kubernetes-dashboard",
+                  "ready": true,
+                  "restartCount": 3,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:39Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "172.17.0.5",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-12T20:56:25Z"
+            }
+          },
+          {
+            "metadata": {
+              "creationTimestamp": "2018-03-12T20:56:23Z",
+              "labels": {
+                "addonmanager.kubernetes.io/mode": "EnsureExists",
+                "integration-test": "storage-provisioner"
+              },
+              "name": "storage-provisioner",
+              "namespace": "kube-system",
+              "resourceVersion": "81506",
+              "selfLink": "/api/v1/namespaces/kube-system/pods/storage-provisioner",
+              "uid": "d2d2524c-2637-11e8-86c1-0800274b92f0"
+            },
+            "spec": {
+              "containers": [
+                {
+                  "command": [
+                    "/storage-provisioner"
+                  ],
+                  "image": "gcr.io/k8s-minikube/storage-provisioner:v1.8.1",
+                  "imagePullPolicy": "IfNotPresent",
+                  "name": "storage-provisioner",
+                  "resources": {},
+                  "terminationMessagePath": "/dev/termination-log",
+                  "terminationMessagePolicy": "File",
+                  "volumeMounts": [
+                    {
+                      "mountPath": "/tmp",
+                      "name": "tmp"
+                    },
+                    {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "default-token-9dwxx",
+                      "readOnly": true
+                    }
+                  ]
+                }
+              ],
+              "dnsPolicy": "ClusterFirst",
+              "hostNetwork": true,
+              "nodeName": "minikube",
+              "restartPolicy": "Always",
+              "schedulerName": "default-scheduler",
+              "securityContext": {},
+              "serviceAccount": "default",
+              "serviceAccountName": "default",
+              "terminationGracePeriodSeconds": 30,
+              "volumes": [
+                {
+                  "hostPath": {
+                    "path": "/tmp",
+                    "type": "Directory"
+                  },
+                  "name": "tmp"
+                },
+                {
+                  "name": "default-token-9dwxx",
+                  "secret": {
+                    "defaultMode": 420,
+                    "secretName": "default-token-9dwxx"
+                  }
+                }
+              ]
+            },
+            "status": {
+              "conditions": [
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:26Z",
+                  "status": "True",
+                  "type": "Initialized"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-21T13:04:39Z",
+                  "status": "True",
+                  "type": "Ready"
+                },
+                {
+                  "lastProbeTime": null,
+                  "lastTransitionTime": "2018-03-12T20:56:26Z",
+                  "status": "True",
+                  "type": "PodScheduled"
+                }
+              ],
+              "containerStatuses": [
+                {
+                  "containerID": "docker://9a6c61df57855ef025d8a4ae28c3f3cacf9798ad67698c5057e2fe79193c820f",
+                  "image": "gcr.io/k8s-minikube/storage-provisioner:v1.8.0",
+                  "imageID": "docker-pullable://gcr.io/k8s-minikube/storage-provisioner@sha256:088daa9fcbccf04c3f415d77d5a6360d2803922190b675cb7fc88a9d2d91985a",
+                  "lastState": {
+                    "terminated": {
+                      "containerID": "docker://ca40ee70ebdeec6714332defd9c59f844713268344cba627ed5e41e7f5da4518",
+                      "exitCode": 2,
+                      "finishedAt": "2018-03-21T13:03:12Z",
+                      "reason": "Error",
+                      "startedAt": "2018-03-19T20:14:26Z"
+                    }
+                  },
+                  "name": "storage-provisioner",
+                  "ready": true,
+                  "restartCount": 2,
+                  "state": {
+                    "running": {
+                      "startedAt": "2018-03-21T13:04:39Z"
+                    }
+                  }
+                }
+              ],
+              "hostIP": "192.168.99.100",
+              "phase": "Running",
+              "podIP": "192.168.99.100",
+              "qosClass": "BestEffort",
+              "startTime": "2018-03-12T20:56:26Z"
+            }
+          }
+        ],
+        "kind": "PodList",
+        "metadata": {
+          "resourceVersion": "94845",
+          "selfLink": "/api/v1/namespaces/kube-system/pods"
+        }
+      }
+    ]
+  },
+  "target": "kubernetes"
+}

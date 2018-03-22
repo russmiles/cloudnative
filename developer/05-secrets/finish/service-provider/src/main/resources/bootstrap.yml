@@ -3,5 +3,5 @@ spring:
     name: providerservice
   cloud:
     vault:
-      token: d41c902c-421e-d708-1f48-267087b8dcae
+      token:  078b5f85-ddae-f40d-deb6-3c4cbf0496ad
       scheme: http
