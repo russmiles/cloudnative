@@ -3,5 +3,9 @@ server:
 
 consumed:
   microservice:
-    name: "my-provider-service"
-    url: "http://my-provider-service:8080"
+    name: "PROVIDERSERVICE"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://my-eureka-service:8080/eureka/
