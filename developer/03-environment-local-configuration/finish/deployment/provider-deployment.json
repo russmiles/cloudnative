@@ -30,6 +30,10 @@
             } ],
             "imagePullPolicy" : "IfNotPresent",
             "image" : "antifragilesoftware/provider-service",
+            "env": [ {
+              "name": "foo",
+              "value": "You"
+            } ],
             "resources" : {
               "limits" : {
                 "cpu" : 0.4,
