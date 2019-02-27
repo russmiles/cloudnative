@@ -3,5 +3,5 @@ server:
 
 consumed:
   microservice:
-    name: "my-provider-service"
-    port: "8080"
+    name: "localhost"
+    port: "8090"

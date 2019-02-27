@@ -29,7 +29,7 @@
               "protocol" : "TCP"
             } ],
             "imagePullPolicy" : "IfNotPresent",
-            "image" : "antifragilesoftware/provider-service",
+            "image" : "eu.gcr.io/cloud-explore-206513/provider-service",
             "resources" : {
               "limits" : {
                 "cpu" : 0.4,
@@ -44,7 +44,11 @@
         }
       },
       "strategy" : {
-        "type" : "Recreate"
+        "type" : "RollingUpdate",
+        "rollingUpdate" : {
+          "maxUnavailable" : 1,
+          "maxSurge" : 1
+        }
       }
     }
   }

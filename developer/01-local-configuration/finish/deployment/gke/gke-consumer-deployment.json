@@ -2,34 +2,34 @@
     "apiVersion" : "apps/v1beta1",
     "kind" : "Deployment",
     "metadata" : {
-      "name" : "my-provider-app"
+      "name" : "my-consumer-app"
     },
     "spec" : {
       "replicas" : 1,
       "selector" : {
         "matchLabels" : {
-          "service" : "my-provider-service"
+          "service" : "my-consumer-service"
         }
       },
       "template" : {
         "metadata" : {
-          "name" : "my-provider-app",
+          "name" : "my-consumer-app",
           "labels" : {
-            "name" : "my-provider-app",
-            "service" : "my-provider-service",
+            "name" : "my-consumer-app",
+            "service" : "my-consumer-service",
             "biz-app-id" : "retail"
           }
         },
         "spec" : {
           "containers" : [ {
-            "name" : "my-provider-app",
+            "name" : "my-consumer-app",
             "ports" : [ {
               "name" : "http",
               "containerPort" : 8080,
               "protocol" : "TCP"
             } ],
             "imagePullPolicy" : "IfNotPresent",
-            "image" : "antifragilesoftware/provider-service",
+            "image" : "eu.gcr.io/cloud-explore-206513/service-consumer",
             "resources" : {
               "limits" : {
                 "cpu" : 0.4,
@@ -44,7 +44,11 @@
         }
       },
       "strategy" : {
-        "type" : "Recreate"
+        "type" : "RollingUpdate",
+        "rollingUpdate" : {
+          "maxUnavailable" : 1,
+          "maxSurge" : 1
+        }
       }
     }
   }
